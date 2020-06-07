@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Home</title>
+        <style>
+            body {
+                margin: 0px;
+                font:"georgina", sans;
+            }
+            p {
+                padding-left:20px;
+            }
+            .header-div {
+                margin: 0px;
+                padding:0px;
+                height: 75px;
+            }
+            #game-header {
+                font: "georgina", sans;
+                padding-bottom:20px ;
+                padding-left: 20px;
+                text-align: center;
+            }
+            .sidebar {
+                height: 100%;
+                width: 160px;
+                position: fixed;
+                z-index: 1;
+                top: 0;
+                left: 0;
+                background-color: rgb(92, 118, 190);
+                overflow-x: hidden;
+                padding-top: 20px;
+            }
+            .game-link {
+                text-decoration:none;
+                color: rgb(255, 255, 255);
+                padding-left: 5px;
+            }
+            a:hover {
+                color:rgb(200, 200, 200);
+            }
+            .instructions {
+                font: "georgina", sans;
+                padding-left: 200px;
+
+            }
+            .highscore {
+                position:absolute;
+            }
+        </style>
+        
+    </head>
+    <body>
+        <div class = "header-div">
+            <h1 id = "game-header">
+                <b>
+                    Coin-Collecting Game
+                </b>
+            </h1>
+        </div>
+        <div class = "sidebar">
+            <a href = "coin-collecting-game.html" class = "game-link">
+                Coin Collecting Game
+            </a>
+            <p>More coming soon!</p>
+        </div>
+        <!--
+        <p class = "highscore">HIGH SCORE:</p>
+        <p class = "highvalue"></p>
+        coming soon!
+        -->
+    <p align="center"> 
+	<!--This draws the Canvas on the webpage -->
+      <canvas id="mycanvas"></canvas> 
+    </p>
+    
+    <script src="https://cdn.jsdelivr.net/processing.js/1.4.8/processing.min.js"></script> 
+ 
+    <script id = "coin-collecting-game-processing-script">
+        var sketchProc = function(processingInstance) {
+           
+            with (processingInstance) {
+                size(480, 480); 
+                // ProgramCodeGoesHere
+                var ended = false;
+                var speed = 1;
+                var livesLeft = 3;
+                var prevHighCoins = 0;
+                noStroke();
+                frameRate(60);
+
+                 /* @pjs preload="picture.png"; */
+                var manImg;
+                setup = function() {
+                    manImg = loadImage("picture.png");
+                    image(manImg, 0, 0);
+                }
+                //PImage manImg = loadImage("https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/microsoft/209/standing-person_1f9cd.png");
+                var Man = function(x, y) {
+                    this.x = x;
+                    this.y = y;
+                    this.coins = 0;
+                };
+                Man.prototype.draw = function() {
+                    fill(255, 0, 0);
+                    this.y = constrain(this.y, 0, height-50);
+                    image(manImg, this.x, this.y, 40, 40);
+                };
+
+
+                Man.prototype.up = function() {
+                    this.y -= 5;
+                };
+
+                Man.prototype.fall = function() {
+                    this.img = "error, ignore";
+                    this.y += 5;
+                };
+
+                Man.prototype.checkForcoinGrab = function(coin) {
+                    if ((coin.x >= this.x && coin.x <= (this.x + 30)) && 
+                    (coin.y >= this.y && coin.y <= (this.y + 30))) {
+                        coin.y = -400;
+                        //coin.y= random(20, 500);
+                        //coin.x=coins[coins.length-1].x+40;
+                        this.coins++;
+                    }
+                    
+                };
+
+                Man.prototype.checkForStone = function(stone) {
+                    if ((stone.x >= this.x && stone.x <= (this.x + 30)) && 
+                    (stone.y >= this.y && stone.y <= (this.y + 30))) {
+                        stone.y = -400;
+                        livesLeft -= 1;
+                    }
+                };
+
+                var Coin = function(x, y) {
+                    this.x = x;
+                    this.y = y;
+                };
+
+                Coin.prototype.draw = function() {
+                    fill(189, 154, 28);
+                    ellipse(this.x, this.y, 30, 30);
+                    fill(33, 30, 2);
+                    textSize(20);
+                    text("$", this.x-6, this.y+7 );
+                };
+
+                var Stone = function(x, y) {
+                    this.x = x;
+                    this.y = y;
+                };
+
+                Stone.prototype.dray = function() {
+                    fill(196, 172, 172);
+                    ellipse(this.x, this.y, 30, 30);
+                };
+
+                var man = new Man(20, 300);
+                var coins = [];
+                var coinCount=300;
+                for (var i = 0; i < coinCount; i++) {  
+                    coins.push(new Coin(i * 40 + 480, random(20, 480)));
+                }
+                var Stones = []; 
+                for (var i = 0; i < coinCount/5; i ++) {
+                    Stones.push(new Stone(i * 200 + 480, random(20, 480)));
+                }
+                draw = function() {
+
+                    background(0, 0, 0);
+                    fill(90, 171, 9);
+                    console.log(frameCount);
+                    console.log(speed);
+                    if (frameCount  === 1693 || (frameCount>1693 && (frameCount-1693) % 1196 === 0) ) {
+                       coins = coins.splice(292,coinCount);
+                       Stones = Stones.splice(57,coinCount/5);
+                        
+                        for (var i = 8; i < coinCount; i++) {  
+                            coins.push(new Coin(i * 40  , random(20, 480)));
+                        }
+                        for (var i = 3; i < coinCount/5; i ++) {
+                            Stones.push(new Stone(i * 200 , random(20, 480)));
+                        }
+                    }
+                    
+                    for (var i = 0; i < coins.length; i++) {
+                        coins[i].draw();
+                        man.checkForcoinGrab(coins[i]);
+                        coins[i].x -= speed;
+                    }
+
+                    
+                    for (var i = 0; i < Stones.length; i++) {
+                        Stones[i].dray();
+                        man.checkForStone(Stones[i]);
+                        Stones[i].x -=speed;
+                    }
+                    fill(255, 0, 0);
+                    textSize(18);
+                    text("Score: " + man.coins, 20, 30);
+                    text("Lives Left: " + livesLeft, 120, 30);
+                    textSize(13);
+                    if (keyPressed && keyCode === 0) {
+                        
+                        man.up();
+                    } else {
+                        man.fall();
+                    }
+                    if(livesLeft <= 0) {
+                        textSize(36);
+                        background(0, 0, 0);
+                        text("GAME OVER!!", 112, 210);
+                        textSize(12);
+                        text("You finished with a score of " + man.coins, 112, 150);
+                        ended = true;
+                        noLoop();
+
+                    }
+                    /*
+                    if (coins[99].x < 500)  {
+                        for (var i = 0; i < 100; i++) {  
+                    coins.push(new Coin((i * random(40, 41)*speed) + 500, random(20, 460)));
+                        }
+                    }
+                    does not work
+                    */  
+                   
+                    man.draw();
+                    speed += 0.009;
+                    speed = constrain(speed, 0, 10);
+                    if ( frameCount % 100 === 0) {
+                        
+                    }
+                };
+               
+            }};
+
+            // Get the canvas that Processing-js will use
+            var canvas = document.getElementById("mycanvas"); 
+            // Pass the function sketchProc (defined in myCode.js) to Processing's constructor.
+            var processingInstance = new Processing(canvas, sketchProc); 
+        </script>
+        <p class = "instructions">Click on the game once, and then press space to jump, and let go to fall, 
+            collect the coins and avoid the stones.</p>
+        <p><b>Play again</b></p>
+    </body>
+</html>
+<!--
+    End of Code!
+-->
