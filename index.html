@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+
+
+
 <html>
     <head>
         <meta charset="UTF-8">
@@ -33,6 +36,9 @@
                 overflow-x: hidden;
                 padding-top: 20px;
             }
+             
+
+            
             .game-link {
                 text-decoration:none;
                 color: rgb(255, 255, 255);
@@ -41,9 +47,10 @@
             a:hover {
                 color:rgb(200, 200, 200);
             }
-	    #replay-link {
-                padding-left: 200px;
-	    }
+	        #replay-link, #replay-link a{
+               padding-left: 200px;
+               text-decoration:none;
+	        }          
             .instructions {
                 font: "georgina", sans;
                 padding-left: 200px;
@@ -78,7 +85,6 @@
         coming soon!
         -->
     <p align="center"> 
-	<!--This draws the Canvas on the webpage -->
       <canvas id="mycanvas"></canvas> 
     </p>
     
@@ -89,7 +95,6 @@
            
             with (processingInstance) {
                 size(480, 480); 
-                // ProgramCodeGoesHere
                 var ended = false;
                 var speed = 1;
                 var livesLeft = 3;
@@ -247,15 +252,14 @@
                
             }};
 
-            // Get the canvas that Processing-js will use
+            
             var canvas = document.getElementById("mycanvas"); 
-            // Pass the function sketchProc (defined in myCode.js) to Processing's constructor.
+            
             var processingInstance = new Processing(canvas, sketchProc); 
         </script>
 
-        <p><b>Play again</b></p>
     </body>
 </html>
 <!--
-    End of Code!
+    *End of Code!
 -->
