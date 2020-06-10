@@ -97,6 +97,9 @@
             
             with (processingInstance) {
                 size(480, 480); 
+                if (document.cookie.indexOf("coinhighscore")==-1) {
+                    document.cookie = "coinhighscore = 0";
+                }
                 var ended = false;
                 var speed = 1;
                 var livesLeft = 3;
@@ -249,9 +252,11 @@
                     }
                 };
                 if (ended === true) {
-                    
+                    if (man.coins > document.cookie) {
+                        document.cookie = "coinhighscore=" + man.coins + "; expires=Wed, 18 Dec 2024 12:00:00 UTC; path=/"
+                    }
                 }
-                setCookie("highscore", 0, 14);
+                
             }};
 
 
