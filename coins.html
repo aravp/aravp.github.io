@@ -261,6 +261,8 @@
                     } else {
                         man.fall();
                     }
+			                    var cookieErrorFixer = man.coins;
+
                     if(livesLeft <= 0) {
                         textSize(36);
                         background(0, 0, 0);
@@ -280,7 +282,6 @@
                     man.draw();
                     speed += 0.009;
                     speed = constrain(speed, 0, 10);
-                    var cookieErrorFixer = man.coins;
                 };
                 
                 
