@@ -121,6 +121,7 @@
                 if (document.cookie.indexOf("coinhighscore")==-1) {
                     document.cookie = "coinhighscore = 0";
                 }
+                var cookieErrorFixer;
                 var ended = false;
                 var speed = 1;
                 var livesLeft = 3;
@@ -269,6 +270,7 @@
                         man.fall();
                     }
                     document.getElementById("highscorenumber").textContent = parseInt(getCookie("coinhighscore"))
+                    cookieErrorFixer = man.coins;
                     if(livesLeft <= 0) {
                         textSize(36);
                         background(0, 0, 0);
@@ -277,7 +279,7 @@
                         text("You finished with a score of " + man.coins, 112, 150);
                         ended = true;
                             if (man.coins > getCookie("coinhighscore")) {
-                                document.cookie = "coinhighscore=" + cookieErrorFixer + "; expires=Wed, 18 Dec 2024 12:00:00 UTC; path=/"
+                                document.cookie = "coinhighscore=" + cookieErrorFixer + ";"
                                 document.getElementById("highscorenumber").textContent = parseInt(getCookie("coinhighscore"));
                             }
                             noLoop();
@@ -288,7 +290,6 @@
                     man.draw();
                     speed += 0.009;
                     speed = constrain(speed, 0, 10);
-                    var cookieErrorFixer = man.coins;
                 };
                 
                 
