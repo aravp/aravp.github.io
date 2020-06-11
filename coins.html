@@ -269,7 +269,6 @@
                     } else {
                         man.fall();
                     }
-                    document.getElementById("highscorenumber").textContent = parseInt(getCookie("coinhighscore"))
                     cookieErrorFixer = man.coins;
                     if(livesLeft <= 0) {
                         textSize(36);
@@ -278,9 +277,9 @@
                         textSize(12);
                         text("You finished with a score of " + man.coins, 112, 150);
                         ended = true;
-                            if (man.coins > getCookie("coinhighscore")) {
+                            if (cookieErrorFixer > getCookie("coinhighscore")) {
                                 document.cookie = "coinhighscore=" + cookieErrorFixer + ";"
-                                document.getElementById("highscorenumber").textContent = parseInt(getCookie("coinhighscore"));
+                                document.getElementById("highscorenumber").textContent = cookieErrorFixer;
                             }
                             noLoop();
                             
