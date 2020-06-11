@@ -268,7 +268,7 @@
                     } else {
                         man.fall();
                     }
-                    document.getElementById("highscorenumber").textContent = getCookie("coinhighscore")
+                    document.getElementById("highscorenumber").textContent = parseInt(getCookie("coinhighscore"))
                     if(livesLeft <= 0) {
                         textSize(36);
                         background(0, 0, 0);
@@ -278,7 +278,7 @@
                         ended = true;
                             if (man.coins > getCookie("coinhighscore")) {
                                 document.cookie = "coinhighscore=" + cookieErrorFixer + "; expires=Wed, 18 Dec 2024 12:00:00 UTC; path=/"
-                                document.getElementById("highscorenumber").textContent = getCookie("coinhighscore");
+                                document.getElementById("highscorenumber").textContent = parseInt(getCookie("coinhighscore"));
                             }
                             noLoop();
                             
@@ -296,7 +296,7 @@
 
 
 
-            
+
             var canvas = document.getElementById("mycanvas"); 
             
             var processingInstance = new Processing(canvas, sketchProc); 
