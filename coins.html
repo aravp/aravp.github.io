@@ -57,8 +57,12 @@
                 padding-left: 200px;
 
             }
-            .highscore {
+            .highscore, #highscorenumber {
                 color: #000;
+                margin-bottom: 30px;
+                margin-top:0px;
+                margin-left: 0px;
+                margin-right: 0px;
             }
         </style>
         
@@ -71,7 +75,7 @@
                 </b>
             </h1>
             <p class = "highscore">HIGH SCORE:</p>
-            <p class = "highscore"></p>
+            <p id = "highscorenumber"></p>
         </div>
         <div class = "sidebar">
             <a href = "coins.html" class = "game-link">
@@ -254,8 +258,11 @@
                         textSize(12);
                         text("You finished with a score of " + man.coins, 112, 150);
                         ended = true;
-                        noLoop();
-
+                            if (man.coins > getCookie("coinhighscore")) {
+                                document.cookie = "coinhighscore=" + man.coins + "; expires=Wed, 18 Dec 2024 12:00:00 UTC; path=/"
+                            }
+                            noLoop();
+                            
                     }
                     
                    
@@ -264,11 +271,7 @@
                     speed = constrain(speed, 0, 10);
                    
                 };
-                if (ended === true) {
-                    if (man.coins > getCookie("coinhighscore")) {
-                        document.cookie = "coinhighscore=" + man.coins + "; expires=Wed, 18 Dec 2024 12:00:00 UTC; path=/"
-                    }
-                }
+                
                 
             }};
 
