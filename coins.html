@@ -36,6 +36,7 @@
                 background-color: rgb(92, 118, 190);
                 overflow-x: hidden;
                 padding-top: 20px;
+                text-align:center;
             }
 
 
@@ -49,12 +50,17 @@
                 color:rgb(200, 200, 200);
             }
             #replay-link, #replay-link a{
-            padding-left: 200px;
-            text-decoration:none;
+                text-align:center;
+                font-size: 20px;
+                color:black;
+                margin-bottom:20px;
+                
             }          
             .instructions {
                 font: "georgina", sans;
                 padding-left: 200px;
+                width:200px;
+                position:absolute;
 
             }
             .highscore, #highscorenumber {
@@ -63,6 +69,10 @@
                 margin-top:0px;
                 margin-left: 0px;
                 margin-right: 0px;
+                position: absolute; 
+                left: 400px;
+                text-align:center;
+
             }
         </style>
         
@@ -74,10 +84,11 @@
                     Coin-Collecting Game
                 </b>
             </h1>
-            <p class = "highscore">HIGH SCORE:</p>
+            <p class = "highscore">HIGH SCORE: </p>
             <p id = "highscorenumber"></p>
         </div>
         <div class = "sidebar">
+            <h1>Games</h1>
             <a href = "coins.html" class = "game-link">
                 Coin Collecting Game
             </a>
@@ -88,7 +99,6 @@
 	    <p id = "replay-link"> <b> <a href = "coins.html">Replay</a> </b> </p>
         
         
-        coming soon!
     <p align="center"> 
       <canvas id="mycanvas"></canvas> 
     </p>
@@ -259,7 +269,8 @@
                         text("You finished with a score of " + man.coins, 112, 150);
                         ended = true;
                             if (man.coins > getCookie("coinhighscore")) {
-                                document.cookie = "coinhighscore=" + man.coins + "; expires=Wed, 18 Dec 2024 12:00:00 UTC; path=/"
+                                document.cookie = "coinhighscore=" + cookieErrorFixer + "; expires=Wed, 18 Dec 2024 12:00:00 UTC; path=/"
+                                document.getElementById("highscorenumber").textContent = getCookie("coinhighscore");
                             }
                             noLoop();
                             
@@ -269,7 +280,7 @@
                     man.draw();
                     speed += 0.009;
                     speed = constrain(speed, 0, 10);
-                   
+                    var cookieErrorFixer = man.coins;
                 };
                 
                 
