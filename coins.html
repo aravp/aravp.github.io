@@ -19,12 +19,12 @@
                 margin: 0px;
                 padding:0px;
                 height: 75px;
+                text-align:center;
             }
             #game-header {
                 font: "georgina", sans;
                 padding-bottom:20px ;
                 padding-left: 20px;
-                text-align: center;
             }
             .sidebar {
                 height: 100%;
@@ -193,6 +193,21 @@
                     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
                     console.log(document.cookie);
                 }
+                var getCookie = function(cname) {
+                    var name = cname + "=";
+                    var decodedCookie = decodeURIComponent(document.cookie);
+                    var ca = decodedCookie.split(';');
+                    for(var i = 0; i <ca.length; i++) {
+                        var c = ca[i];
+                        while (c.charAt(0) == ' ') {
+                            c = c.substring(1);
+                        }
+                        if (c.indexOf(name) == 0) {
+                            return c.substring(name.length, c.length);
+                        }
+                    }
+                    return "";
+                }
                 draw = function() {
 
                     background(0, 0, 0);
@@ -247,12 +262,10 @@
                     man.draw();
                     speed += 0.009;
                     speed = constrain(speed, 0, 10);
-                    if ( frameCount % 100 === 0) {
-                        
-                    }
+                   
                 };
                 if (ended === true) {
-                    if (man.coins > document.cookie) {
+                    if (man.coins > getCookie("coinhighscore")) {
                         document.cookie = "coinhighscore=" + man.coins + "; expires=Wed, 18 Dec 2024 12:00:00 UTC; path=/"
                     }
                 }
