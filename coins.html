@@ -70,10 +70,16 @@
                 margin-left: 0px;
                 margin-right: 0px;
                 position: absolute; 
-                left: 400px;
                 text-align:center;
 
             }
+            .highscore {
+                left:400;
+            }
+            #highscorenumber {
+                left: 440;
+            }
+            
         </style>
         
     </head>
@@ -84,9 +90,10 @@
                     Coin-Collecting Game
                 </b>
             </h1>
-            <p class = "highscore">HIGH SCORE: </p>
-            <p id = "highscorenumber"></p>
+            
         </div>
+        <p class = "highscore">HIGH SCORE: </p>
+        <p id = "highscorenumber"></p>
         <div class = "sidebar">
             <h1>Games</h1>
             <a href = "coins.html" class = "game-link">
@@ -261,8 +268,7 @@
                     } else {
                         man.fall();
                     }
-			                    var cookieErrorFixer = man.coins;
-
+                    document.getElementById("highscorenumber").textContent = getCookie("coinhighscore")
                     if(livesLeft <= 0) {
                         textSize(36);
                         background(0, 0, 0);
@@ -282,6 +288,7 @@
                     man.draw();
                     speed += 0.009;
                     speed = constrain(speed, 0, 10);
+                    var cookieErrorFixer = man.coins;
                 };
                 
                 
@@ -293,6 +300,9 @@
             var canvas = document.getElementById("mycanvas"); 
             
             var processingInstance = new Processing(canvas, sketchProc); 
+        </script>
+        <script id = "html-stuff-script">
+            
         </script>
     
 
